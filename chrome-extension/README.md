@@ -2,18 +2,86 @@
 
 Manifest V3 extension that beeps profanity in **Twitch live** audio and masks it in chat. Plain JavaScript, no build step.
 
-## Setup
+## Install
 
-1. **Keys.** Copy `.env.example` to `.env` and fill in:
-   ```
-   DEEPGRAM_API_KEY=...    # speech-to-text (required)
-   TYPESAFE_API_KEY=...    # Jev classifier (recommended)
-   ANTHROPIC_API_KEY=...   # Claude Haiku fallback (optional)
-   ```
-   `.env` is gitignored. The extension copies these into its settings on install/reload, but only into empty fields — keys typed in the popup win. You can also just paste them in the popup.
-2. **Load it.** `chrome://extensions` → **Developer mode** → **Load unpacked** → this folder.
-3. **Use a profile without 7TV** — 7TV replaces Twitch's chat, which the chat filter doesn't support.
-4. **Watch.** Open a live channel and click the page once (browsers only allow audio processing after a user gesture). The badge goes *click to enable* → *syncing…* → **🛡 StreamSafe on** in about 10 s.
+StreamSafe isn't on the Chrome Web Store, so you load it from source. It takes about five minutes. You don't need Node, npm, or a build step.
+
+### What you need
+
+- **Chrome**, or another Chromium browser such as Edge or Brave, version 111 or newer.
+- **A Deepgram API key** (required). It turns stream audio into text. Sign up at [deepgram.com](https://deepgram.com); new accounts get free credit.
+- **A TypeSafe API key** (recommended). It powers Jev, the classifier that judges each word in context ("hell" in "what the hell" vs. "Hell's Kitchen"). Get one at [typesafe.ai](https://typesafe.ai). Without it, StreamSafe falls back to the built-in word list.
+- **An Anthropic API key** (optional). You only need it if you pick *claude haiku* as the classifier. It's too slow for live use, so most people can skip it.
+
+### 1. Download the code
+
+```bash
+git clone https://github.com/TheRealRajdeep/streamsafe.git
+```
+
+Or, on the GitHub page, click **Code → Download ZIP** and unzip it. The extension is in the `chrome-extension` folder.
+
+### 2. Load the extension
+
+1. Open `chrome://extensions` in a new tab.
+2. Turn on **Developer mode** (toggle in the top-right corner).
+3. Click **Load unpacked** and select the `chrome-extension` folder. Pick the folder itself, not the repo root and not a file inside it.
+4. StreamSafe appears in the list. Click the puzzle-piece icon in the toolbar and pin it so the shield icon stays visible.
+
+### 3. Add your API keys
+
+1. Click the StreamSafe shield icon in the toolbar.
+2. Open **settings & keys**.
+3. Paste your **deepgram key** and **typesafe key** (and the anthropic key, if you have one).
+4. Click **save**. The label next to *settings & keys* should read **keys set ✓**. If it says **keys missing!**, the Deepgram key or the key for the selected classifier is empty.
+
+Keys are stored in the extension's local storage and only sent to their own APIs. Twitch pages never see them.
+
+<details>
+<summary>Alternative: load keys from a <code>.env</code> file</summary>
+
+Copy `.env.example` to `.env` in the `chrome-extension` folder and fill it in, without quotes:
+
+```
+DEEPGRAM_API_KEY=...
+TYPESAFE_API_KEY=...
+ANTHROPIC_API_KEY=...
+```
+
+Then click the reload icon on the StreamSafe card in `chrome://extensions`. The extension copies these into any **empty** key fields when it's installed or reloaded. Keys you've already entered in the popup are kept. `.env` is gitignored.
+</details>
+
+### 4. Watch a stream
+
+1. Open any **live** channel on [twitch.tv](https://www.twitch.tv).
+2. **Click anywhere on the page once.** Browsers only allow audio processing after you interact with the page.
+3. Watch the StreamSafe badge at the top-left of the player: *click the page to start* → *syncing with the stream…* → on. This takes about 10 seconds. Audio in that window isn't filtered yet.
+
+Once it's on, swears in the audio are replaced with a beep and swears in chat are masked. The popup shows running counts, and the switch at the top turns filtering on or off.
+
+### Things to know
+
+- **Turn off 7TV and BetterTTV on Twitch.** They replace Twitch's chat, and the chat filter only works with the native chat. Disable them, or use a separate Chrome profile for StreamSafe.
+- **Live streams only.** VODs and clips aren't filtered.
+- **The stream runs ~5 s further behind live.** StreamSafe turns off Twitch's low-latency mode so it has time to hear each word before it plays.
+- **API usage costs money.** Deepgram and TypeSafe bill per use. Turning StreamSafe off in the popup stops all API calls.
+
+### Updating
+
+Pull the latest code (`git pull`, or download the ZIP again into the same folder). Then click the reload icon on the StreamSafe card in `chrome://extensions` and refresh any open Twitch tabs. Your keys and settings are kept.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| Badge stuck on *click the page to start* | Click on the page (not just the video controls). |
+| Badge stuck on *syncing with the stream…* | Make sure the stream is live and audio is playing (not muted in the Twitch player). Reload the page. |
+| Badge says *reload the page to keep filtering* | Twitch swapped the player (raid, host, ad). Reload the page. |
+| Nothing gets beeped | Open the popup: check for **keys missing!** or an error message, and that the switch is on. A rising **stt fails** count means the Deepgram key is wrong or out of credit. |
+| Chat isn't masked | Disable 7TV / BetterTTV and reload. |
+| Extension errors after updating | Reload it in `chrome://extensions`, then refresh Twitch tabs. |
+
+For deeper debugging, see [Debugging on Twitch](#development) below.
 
 ## Architecture
 
