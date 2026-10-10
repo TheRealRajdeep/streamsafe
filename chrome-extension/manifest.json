@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "StreamSafe",
+  "version": "0.1.0",
+  "description": "Beeps profanity in Twitch live audio and masks it in chat, judged in context.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://api.deepgram.com/*",
+    "https://api.typesafe.ai/*",
+    "https://api.anthropic.com/*"
+  ],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": { "default_popup": "popup.html", "default_title": "StreamSafe" },
+  "content_scripts": [
+    {
+      "matches": ["https://www.twitch.tv/*"],
+      "js": ["util.js", "hook.js", "wordlist.js", "audio.js", "sync.js", "chat.js", "badge.js", "main.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://www.twitch.tv/*"],
+      "js": ["bridge.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

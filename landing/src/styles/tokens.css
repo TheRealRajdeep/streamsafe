@@ -1,0 +1,29 @@
+:root {
+  --paper: #f7f2e8;
+  --paper-2: #efe6d6;
+  --card: #fffdf8;
+  --ink: #1f1b16;
+  --ink-2: #5a5247;
+  --ink-3: #8b8172;
+  --line: #e4d9c6;
+
+  --twitch: #9146ff;
+  --twitch-ink: #18181b;
+  --safe: #2fa66a;
+  --safe-soft: #dcf2e4;
+  --hot: #ef5b3f;
+  --hot-soft: #fde3dc;
+  --sun: #ffd54a;
+  --tape: rgba(255, 224, 140, 0.75);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-hand: "Caveat", "Comic Sans MS", cursive;
+
+  --radius: 16px;
+  --shadow-card: 0 1px 0 rgba(31, 27, 22, 0.05), 0 18px 40px -18px rgba(31, 27, 22, 0.28);
+  --shadow-sticker: 0 2px 0 rgba(31, 27, 22, 0.08), 0 10px 18px -8px rgba(31, 27, 22, 0.35);
+}

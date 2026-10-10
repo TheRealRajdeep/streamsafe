@@ -1,0 +1,9 @@
+{
+  "name": "streamsafe",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bench": "node --env-file-if-exists=.env bench/jev-bench.mjs",
+    "check": "node scripts/check.mjs"
+  }
+}
