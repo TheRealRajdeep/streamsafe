@@ -3,7 +3,7 @@ import { ChromeIcon } from "./icons";
 
 type Props = { size?: "sm" | "lg"; label?: string };
 
-export function AddToChrome({ size = "lg", label = "add to chrome — it's free" }: Props) {
+export function AddToChrome({ size = "lg", label = "install extension — it's free" }: Props) {
   const external = CHROME_STORE_URL !== "#";
   return (
     <a

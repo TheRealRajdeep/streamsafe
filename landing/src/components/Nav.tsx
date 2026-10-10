@@ -24,7 +24,7 @@ export function Nav() {
           <a href="#how">how it works</a>
           <a href="#try">try it</a>
         </nav>
-        <AddToChrome size="sm" label="add to chrome" />
+        <AddToChrome size="sm" label="install extension" />
       </div>
     </header>
   );
