@@ -57,21 +57,32 @@
         ? fullText.replace(c.word, '>>' + c.word + '<<')
         : fullText + ' (spelled out: >>' + c.word + '<<)';
     });
-    for (const f of frags) f.span.style.filter = 'blur(4px)';
+    for (const f of frags) f.span.classList.add('ss-checked', 'ss-checking');
     queue.push({ frags, cands, text: fullText });
+  }
+
+  // Rebuild the fragment as text + green "****" spans (styled in page.css).
+  function maskFragment(f, hits) {
+    const nodes = [];
+    let pos = 0;
+    for (const t of hits.sort((a, b) => a.start - b.start)) {
+      if (t.start < pos) continue;
+      if (t.start > pos) nodes.push(document.createTextNode(f.text.slice(pos, t.start)));
+      const m = document.createElement('span');
+      m.className = 'ss-mask';
+      m.textContent = '*'.repeat(t.end - t.start);
+      nodes.push(m);
+      pos = t.end;
+    }
+    if (pos < f.text.length) nodes.push(document.createTextNode(f.text.slice(pos)));
+    f.span.replaceChildren(...nodes);
   }
 
   function mask(msg, flaggedCands) {
     for (const [fi, f] of msg.frags.entries()) {
       const hits = flaggedCands.flatMap((c) => c.refs).filter(([x]) => x === fi).map(([, ti]) => f.tokens[ti]);
-      if (hits.length) {
-        let s = f.text;
-        for (const t of hits.sort((a, b) => b.start - a.start)) {
-          s = s.slice(0, t.start) + '*'.repeat(t.end - t.start) + s.slice(t.end);
-        }
-        f.span.textContent = s;
-      }
-      f.span.style.filter = '';
+      if (hits.length) maskFragment(f, hits);
+      f.span.classList.remove('ss-checking');
     }
     const n = flaggedCands.length;
     if (n) ss.stat({ chatMasked: n });

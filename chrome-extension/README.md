@@ -143,6 +143,10 @@ stateDiagram-v2
 | `background.js` | Service worker: keys, API calls, stats, `.env` import |
 | `classifier.js` | Deepgram, Jev and Haiku clients (shared with the bench) |
 | `popup.html` / `popup.js` | Keys, classifier, threshold, on/off, stats |
+| `popup.css` | Popup styles — paper, ink borders, stickers (matches `landing/`) |
+| `page.css` | In-page styles for the badge, beep pop and chat masks; injected via the manifest so Twitch's CSP can't block it |
+| `fonts/` | Inter, Instrument Serif, Caveat (bundled, OFL) — same type as the landing page |
+| `icons/` | Toolbar/extension icons rendered from the landing page's shield logo |
 
 ## Development
 
