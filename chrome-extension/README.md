@@ -16,7 +16,7 @@ Earmuffs isn't on the Chrome Web Store, so you load it from source. It takes abo
 ### 1. Download the code
 
 ```bash
-git clone https://github.com/TheRealRajdeep/streamsafe.git
+git clone https://github.com/TheRealRajdeep/earmuffs.git
 ```
 
 Or, on the GitHub page, click **Code → Download ZIP** and unzip it. The extension is in the `chrome-extension` folder.
