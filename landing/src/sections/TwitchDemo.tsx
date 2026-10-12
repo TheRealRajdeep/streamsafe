@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { CHAT, LINES, type ChatMsg, type Token } from "../data/demoScript";
-import { ShieldIcon } from "../components/icons";
+import { HeadphonesIcon } from "../components/icons";
 import { WindowFrame } from "../components/WindowFrame";
 import { EASE_OUT } from "../lib/motion";
 
@@ -206,7 +206,7 @@ export function TwitchDemo() {
             </div>
 
             <motion.div className="ss-badge" data-flash={beeping} layout transition={{ duration: 0.25, ease: EASE_OUT }}>
-              <ShieldIcon size={16} />
+              <HeadphonesIcon size={16} />
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span
                   key={beeping ? `b${cap.line}-${cap.word}` : "idle"}
@@ -215,7 +215,7 @@ export function TwitchDemo() {
                   exit={{ opacity: 0, filter: "blur(3px)", y: -4, transition: { duration: 0.12 } }}
                   transition={{ duration: 0.22, ease: EASE_OUT }}
                 >
-                  {beeping ? <>🔇 “{snippet(line, cap.word)}”</> : "streamsafe is on"}
+                  {beeping ? <>🔇 “{snippet(line, cap.word)}”</> : "earmuffs is on"}
                 </motion.span>
               </AnimatePresence>
             </motion.div>

@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { AddToChrome } from "../components/AddToChrome";
 import { Marquee } from "../components/Marquee";
-import { ShieldIcon } from "../components/icons";
+import { HeadphonesIcon } from "../components/icons";
 import { EASE_OUT } from "../lib/motion";
 
 const PHRASES = ["no more f-bombs", "twitch, kid-friendly", "chat cleaned up", "context, not word lists", "zero setup for kids"];
@@ -28,7 +28,7 @@ export function FinalCta() {
           <h2>
             twitch, but the <em>kid-friendly</em> cut.
           </h2>
-          <p className="section-sub">install it once, then let them watch. streamsafe runs quietly in the background.</p>
+          <p className="section-sub">install it once, then let them watch. earmuffs runs quietly in the background.</p>
           <AddToChrome />
         </motion.div>
 
@@ -42,7 +42,7 @@ export function FinalCta() {
           <span className="tape" aria-hidden="true" />
           <div className="polaroid-shot">
             <div className="ss-badge static" data-flash="true">
-              <ShieldIcon size={16} />
+              <HeadphonesIcon size={16} />
               <span>🔇 “let's f***ing go”</span>
             </div>
           </div>

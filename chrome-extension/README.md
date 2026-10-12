@@ -1,16 +1,16 @@
-# StreamSafe — Chrome extension
+# Earmuffs — Chrome extension
 
 Manifest V3 extension that beeps profanity in **Twitch live** audio and masks it in chat. Plain JavaScript, no build step.
 
 ## Install
 
-StreamSafe isn't on the Chrome Web Store, so you load it from source. It takes about five minutes. You don't need Node, npm, or a build step.
+Earmuffs isn't on the Chrome Web Store, so you load it from source. It takes about five minutes. You don't need Node, npm, or a build step.
 
 ### What you need
 
 - **Chrome**, or another Chromium browser such as Edge or Brave, version 111 or newer.
 - **A Deepgram API key** (required). It turns stream audio into text. Sign up at [deepgram.com](https://deepgram.com); new accounts get free credit.
-- **A TypeSafe API key** (recommended). It powers Jev, the classifier that judges each word in context ("hell" in "what the hell" vs. "Hell's Kitchen"). Get one at [typesafe.ai](https://typesafe.ai). Without it, StreamSafe falls back to the built-in word list.
+- **A TypeSafe API key** (recommended). It powers Jev, the classifier that judges each word in context ("hell" in "what the hell" vs. "Hell's Kitchen"). Get one at [typesafe.ai](https://typesafe.ai). Without it, Earmuffs falls back to the built-in word list.
 - **An Anthropic API key** (optional). You only need it if you pick *claude haiku* as the classifier. It's too slow for live use, so most people can skip it.
 
 ### 1. Download the code
@@ -26,11 +26,11 @@ Or, on the GitHub page, click **Code → Download ZIP** and unzip it. The extens
 1. Open `chrome://extensions` in a new tab.
 2. Turn on **Developer mode** (toggle in the top-right corner).
 3. Click **Load unpacked** and select the `chrome-extension` folder. Pick the folder itself, not the repo root and not a file inside it.
-4. StreamSafe appears in the list. Click the puzzle-piece icon in the toolbar and pin it so the shield icon stays visible.
+4. Earmuffs appears in the list. Click the puzzle-piece icon in the toolbar and pin it so the headphones icon stays visible.
 
 ### 3. Add your API keys
 
-1. Click the StreamSafe shield icon in the toolbar.
+1. Click the Earmuffs headphones icon in the toolbar.
 2. Open **settings & keys**.
 3. Paste your **deepgram key** and **typesafe key** (and the anthropic key, if you have one).
 4. Click **save**. The label next to *settings & keys* should read **keys set ✓**. If it says **keys missing!**, the Deepgram key or the key for the selected classifier is empty.
@@ -48,27 +48,27 @@ TYPESAFE_API_KEY=...
 ANTHROPIC_API_KEY=...
 ```
 
-Then click the reload icon on the StreamSafe card in `chrome://extensions`. The extension copies these into any **empty** key fields when it's installed or reloaded. Keys you've already entered in the popup are kept. `.env` is gitignored.
+Then click the reload icon on the Earmuffs card in `chrome://extensions`. The extension copies these into any **empty** key fields when it's installed or reloaded. Keys you've already entered in the popup are kept. `.env` is gitignored.
 </details>
 
 ### 4. Watch a stream
 
 1. Open any **live** channel on [twitch.tv](https://www.twitch.tv).
 2. **Click anywhere on the page once.** Browsers only allow audio processing after you interact with the page.
-3. Watch the StreamSafe badge at the top-left of the player: *click the page to start* → *syncing with the stream…* → on. This takes about 10 seconds. Audio in that window isn't filtered yet.
+3. Watch the Earmuffs badge at the top-left of the player: *click the page to start* → *syncing with the stream…* → on. This takes about 10 seconds. Audio in that window isn't filtered yet.
 
 Once it's on, swears in the audio are replaced with a beep and swears in chat are masked. The popup shows running counts, and the switch at the top turns filtering on or off.
 
 ### Things to know
 
-- **Turn off 7TV and BetterTTV on Twitch.** They replace Twitch's chat, and the chat filter only works with the native chat. Disable them, or use a separate Chrome profile for StreamSafe.
+- **Turn off 7TV and BetterTTV on Twitch.** They replace Twitch's chat, and the chat filter only works with the native chat. Disable them, or use a separate Chrome profile for Earmuffs.
 - **Live streams only.** VODs and clips aren't filtered.
-- **The stream runs ~5 s further behind live.** StreamSafe turns off Twitch's low-latency mode so it has time to hear each word before it plays.
-- **API usage costs money.** Deepgram and TypeSafe bill per use. Turning StreamSafe off in the popup stops all API calls.
+- **The stream runs ~5 s further behind live.** Earmuffs turns off Twitch's low-latency mode so it has time to hear each word before it plays.
+- **API usage costs money.** Deepgram and TypeSafe bill per use. Turning Earmuffs off in the popup stops all API calls.
 
 ### Updating
 
-Pull the latest code (`git pull`, or download the ZIP again into the same folder). Then click the reload icon on the StreamSafe card in `chrome://extensions` and refresh any open Twitch tabs. Your keys and settings are kept.
+Pull the latest code (`git pull`, or download the ZIP again into the same folder). Then click the reload icon on the Earmuffs card in `chrome://extensions` and refresh any open Twitch tabs. Your keys and settings are kept.
 
 ### Troubleshooting
 
@@ -214,7 +214,7 @@ stateDiagram-v2
 | `popup.css` | Popup styles — paper, ink borders, stickers (matches `landing/`) |
 | `page.css` | In-page styles for the badge, beep pop and chat masks; injected via the manifest so Twitch's CSP can't block it |
 | `fonts/` | Inter, Instrument Serif, Caveat (bundled, OFL) — same type as the landing page |
-| `icons/` | Toolbar/extension icons rendered from the landing page's shield logo |
+| `icons/` | Toolbar/extension icons rendered from the landing page's headphones logo |
 
 ## Development
 
@@ -225,8 +225,8 @@ npm run bench   # word list vs Jev vs Haiku on 16 context cases (reads keys from
 
 **Debugging on Twitch**
 
-- Page console: one `[streamsafe] chunk {stt, classifier, slack, words, beep, changes}` line per chunk. `slack` must stay positive — it's the time left before that chunk plays. `changes` shows Jev overrides (`+` added, `-` cleared).
-- Service worker console (`chrome://extensions` → StreamSafe → *service worker*): every Deepgram/Jev call with its latency or error.
+- Page console: one `[earmuffs] chunk {stt, classifier, slack, words, beep, changes}` line per chunk. `slack` must stay positive — it's the time left before that chunk plays. `changes` shows Jev overrides (`+` added, `-` cleared).
+- Service worker console (`chrome://extensions` → Earmuffs → *service worker*): every Deepgram/Jev call with its latency or error.
 - Popup: counters and the last error.
 
 ## Settings

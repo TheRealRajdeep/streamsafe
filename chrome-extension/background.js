@@ -54,12 +54,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   const timed = msg.type === 'transcribe' || msg.type === 'classify';
   handle(msg).then(
     (result) => {
-      if (timed) console.log('[streamsafe]', msg.type, 'ok', Math.round(performance.now() - t0) + 'ms');
+      if (timed) console.log('[earmuffs]', msg.type, 'ok', Math.round(performance.now() - t0) + 'ms');
       sendResponse({ ok: true, result });
     },
     (e) => {
       const error = String((e && e.message) || e);
-      console.warn('[streamsafe]', msg.type, 'failed', Math.round(performance.now() - t0) + 'ms', error);
+      console.warn('[earmuffs]', msg.type, 'failed', Math.round(performance.now() - t0) + 'ms', error);
       sendResponse({ ok: false, error });
     },
   );

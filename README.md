@@ -1,10 +1,10 @@
-# 🛡 StreamSafe
+# 🎧 Earmuffs
 
-**Kids watch streamers. Streamers swear. StreamSafe beeps it out — live.**
+**Kids watch streamers. Streamers swear. Earmuffs beeps it out — live.**
 
-StreamSafe is a Chrome extension that removes profanity from **Twitch live streams** before your kid hears it: swear words in the streamer's voice get **beeped**, and swears in chat get **masked** (`****`). It decides **in context**, not with a dumb word list — "kick his ass" gets beeped, "I have class tomorrow" and "Dick Grayson" don't.
+Earmuffs is a Chrome extension that removes profanity from **Twitch live streams** before your kid hears it: swear words in the streamer's voice get **beeped**, and swears in chat get **masked** (`****`). It decides **in context**, not with a dumb word list — "kick his ass" gets beeped, "I have class tomorrow" and "Dick Grayson" don't.
 
-> Existing tools read captions (live streams don't have them) and match word lists. StreamSafe listens to the actual stream audio, a few seconds ahead of you.
+> Existing tools read captions (live streams don't have them) and match word lists. Earmuffs listens to the actual stream audio, a few seconds ahead of you.
 
 ---
 
@@ -24,7 +24,7 @@ flowchart LR
     H --> J["▶ Kid hears it normally"]
 ```
 
-The trick is **time**. Twitch's player buffers the stream ahead of what you're watching. StreamSafe reads each chunk as it downloads, so it has a head start to transcribe, classify, and line up the beep before the word is played.
+The trick is **time**. Twitch's player buffers the stream ahead of what you're watching. Earmuffs reads each chunk as it downloads, so it has a head start to transcribe, classify, and line up the beep before the word is played.
 
 ```mermaid
 flowchart LR
@@ -73,7 +73,7 @@ The three cases a word list gets wrong — and Jev gets right:
 1. Get API keys: [Deepgram](https://console.deepgram.com) (speech-to-text) and [TypeSafe](https://docs.typesafe.ai) (Jev).
 2. Copy `chrome-extension/.env.example` to `chrome-extension/.env` and paste the keys.
 3. In Chrome: `chrome://extensions` → **Developer mode** → **Load unpacked** → pick `chrome-extension/`.
-4. Open a live Twitch channel and click the page once. The badge on the player turns to **🛡 StreamSafe on**.
+4. Open a live Twitch channel and click the page once. The badge on the player turns to **🎧 Earmuffs on**.
 
 Full setup, architecture, and troubleshooting: [`chrome-extension/README.md`](chrome-extension/README.md).
 

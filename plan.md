@@ -1,4 +1,4 @@
-# Plan: StreamSafe — smart Twitch profanity censor (4-hour hackathon build)
+# Plan: Earmuffs — smart Twitch profanity censor (4-hour hackathon build)
 
 ## Context
 Kids watch Twitch streamers who swear constantly. Existing tools only work from captions (which live streams lack) and use dumb word lists. We proved in a feasibility spike (folder since removed; its code now lives in `chrome-extension/`) that we can:
@@ -54,7 +54,7 @@ page world (MAIN, document_start)          isolated world         service worker
   - Timeouts: 2.5s audio / 3s chat → word list decides.
 - `main.js` — chunk pipeline: segment → demux (+decode for calibration) → transcribe → candidates = non-stopword words → word list flags instantly → Jev verdicts override (add or clear) if in time → PTS→video time → schedule beeps → badge + counters. Logs per chunk: `stt ms, jev ms, slack ms before play`.
 - `chat.js` — observe `.chat-scrollable-area__message-container`; blur new `.chat-line__message` text, batch every 700ms (all messages' candidates in one Jev call), mask flagged words as `****`, unblur; timeout → word-list masking.
-- `badge.js` — over the player: "🛡 StreamSafe", flashes `🔇 "what the f***"` per beep; warns on STT failure / not calibrated yet / no click yet.
+- `badge.js` — over the player: "🎧 Earmuffs", flashes `🔇 "what the f***"` per beep; warns on STT failure / not calibrated yet / no click yet.
 - `popup.html/js` — enable toggle, Deepgram + TypeSafe (+ optional Anthropic) key fields, counters (beeped words, chat words masked), last error.
 
 Known accepted gaps: first ~8s after enabling are unfiltered (calibration); ad breaks rely on rolling-median recalibration; 7TV unsupported.

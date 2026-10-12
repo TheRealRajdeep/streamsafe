@@ -6,7 +6,7 @@
 (() => {
   'use strict';
   const ss = window.__ss;
-  const CHANNEL = 'streamsafe-' + Math.random().toString(36).slice(2);
+  const CHANNEL = 'earmuffs-' + Math.random().toString(36).slice(2);
 
   // Stringified into the worker: keep self-contained, no template literals.
   function forwardSegment(url, resp, post) {

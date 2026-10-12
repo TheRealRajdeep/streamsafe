@@ -1,4 +1,4 @@
-# StreamSafe landing page
+# Earmuffs landing page
 
 Vite + React + Motion.
 

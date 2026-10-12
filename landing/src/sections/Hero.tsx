@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import { motion } from "motion/react";
 import { AddToChrome } from "../components/AddToChrome";
 import { Sticker } from "../components/Sticker";
-import { ShieldIcon } from "../components/icons";
+import { HeadphonesIcon } from "../components/icons";
 import { EASE_OUT } from "../lib/motion";
 import { TwitchDemo } from "./TwitchDemo";
 
@@ -30,7 +30,7 @@ export function Hero() {
           </em>
         </motion.h1>
         <motion.p className="sub" {...rise(0.16)}>
-          streamsafe beeps swearing on twitch live streams <i>before</i> it reaches their ears, and cleans up the chat
+          earmuffs beeps swearing on twitch live streams <i>before</i> it reaches their ears, and cleans up the chat
           too. it understands context, so “dick grayson” plays and “he's a dick” doesn't.
         </motion.p>
         <motion.div className="hero-cta" {...rise(0.24)}>
@@ -58,8 +58,8 @@ export function Hero() {
           approved
           <b>✓</b>
         </Sticker>
-        <Sticker className="st-shield" rotate={-6} delay={1.35} parallax={90}>
-          <ShieldIcon size={46} />
+        <Sticker className="st-headphones" rotate={-6} delay={1.35} parallax={90}>
+          <HeadphonesIcon size={46} />
         </Sticker>
         <span className="drag-hint par" style={{ "--par": "190px" } as CSSProperties} aria-hidden="true">
           drag us!

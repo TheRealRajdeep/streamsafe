@@ -10,25 +10,32 @@
   let warning = null;
   let beepTimer = null;
 
-  function shield() {
+  function headphones() {
     const svg = document.createElementNS(SVG, 'svg');
     svg.setAttribute('width', '18');
     svg.setAttribute('height', '18');
     svg.setAttribute('viewBox', '0 0 32 32');
-    const body = document.createElementNS(SVG, 'path');
-    body.setAttribute('d', 'M16 3 5 7v8c0 6.8 4.6 11.9 11 14 6.4-2.1 11-7.2 11-14V7L16 3Z');
-    body.setAttribute('fill', '#2fa66a');
-    body.setAttribute('stroke', '#1f1b16');
-    body.setAttribute('stroke-width', '2');
-    body.setAttribute('stroke-linejoin', 'round');
-    const tick = document.createElementNS(SVG, 'path');
-    tick.setAttribute('d', 'm11 16 3.4 3.4L21.5 12');
-    tick.setAttribute('fill', 'none');
-    tick.setAttribute('stroke', '#fff');
-    tick.setAttribute('stroke-width', '3');
-    tick.setAttribute('stroke-linecap', 'round');
-    tick.setAttribute('stroke-linejoin', 'round');
-    svg.append(body, tick);
+    const node = (tag, attrs) => {
+      const e = document.createElementNS(SVG, tag);
+      for (const k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    };
+    const cup = (x) => node('rect', {
+      x, y: '15.5', width: '10', height: '14', rx: '4.5',
+      fill: '#2fa66a', stroke: '#1f1b16', 'stroke-width': '2',
+    });
+    svg.append(
+      node('path', {
+        d: 'M7 18v-3a9 9 0 0 1 18 0v3', fill: 'none',
+        stroke: '#1f1b16', 'stroke-width': '3.2', 'stroke-linecap': 'round',
+      }),
+      cup('2.5'),
+      cup('19.5'),
+      node('path', {
+        d: 'M7.5 20.5v4M24.5 20.5v4',
+        stroke: '#fff', 'stroke-width': '2.6', 'stroke-linecap': 'round',
+      }),
+    );
     return svg;
   }
 
@@ -43,7 +50,7 @@
     root = el('div', 'ss-ui');
     badge = el('div', 'ss-badge');
     const row = el('div', 'ss-badge-row');
-    row.append(shield(), el('span', '', 'streamsafe'), el('span', 'ss-dot'));
+    row.append(headphones(), el('span', '', 'earmuffs'), el('span', 'ss-dot'));
     sub = el('div', 'ss-badge-sub');
     badge.append(row, sub);
 

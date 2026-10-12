@@ -4,8 +4,8 @@
   'use strict';
   const ss = (window.__ss = window.__ss || {});
 
-  ss.log = (...a) => console.log('[streamsafe]', ...a);
-  ss.warn = (...a) => console.warn('[streamsafe]', ...a);
+  ss.log = (...a) => console.log('[earmuffs]', ...a);
+  ss.warn = (...a) => console.warn('[earmuffs]', ...a);
 
   ss.concatBytes = (parts) => {
     const out = new Uint8Array(parts.reduce((n, p) => n + p.length, 0));

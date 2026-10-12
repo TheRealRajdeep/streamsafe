@@ -1,21 +1,16 @@
-export function ShieldIcon({ size = 18 }: { size?: number }) {
+export function HeadphonesIcon({ size = 18 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
       <path
-        d="M16 3 5 7v8c0 6.8 4.6 11.9 11 14 6.4-2.1 11-7.2 11-14V7L16 3Z"
-        fill="var(--safe)"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="m11 16 3.4 3.4L21.5 12"
+        d="M7 18v-3a9 9 0 0 1 18 0v3"
         fill="none"
-        stroke="#fff"
-        strokeWidth="3"
+        stroke="currentColor"
+        strokeWidth="3.2"
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
+      <rect x="2.5" y="15.5" width="10" height="14" rx="4.5" fill="var(--safe)" stroke="currentColor" strokeWidth="2" />
+      <rect x="19.5" y="15.5" width="10" height="14" rx="4.5" fill="var(--safe)" stroke="currentColor" strokeWidth="2" />
+      <path d="M7.5 20.5v4M24.5 20.5v4" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" />
     </svg>
   );
 }

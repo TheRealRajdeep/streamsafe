@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AddToChrome } from "./AddToChrome";
-import { ShieldIcon } from "./icons";
+import { HeadphonesIcon } from "./icons";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -17,8 +17,8 @@ export function Nav() {
       <div className="scroll-progress" aria-hidden="true" />
       <div className="nav-inner">
         <a className="wordmark" href="#top">
-          <ShieldIcon size={22} />
-          streamsafe
+          <HeadphonesIcon size={22} />
+          earmuffs
         </a>
         <nav className="nav-links">
           <a href="#how">how it works</a>

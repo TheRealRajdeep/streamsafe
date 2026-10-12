@@ -53,7 +53,7 @@ export function Playground() {
         </Reveal>
         <Reveal delay={0.15}>
           <p className="section-sub">
-            tap a sentence to see what streamsafe does, and what a plain word list would do.{" "}
+            tap a sentence to see what earmuffs does, and what a plain word list would do.{" "}
             <span className="warn">(heads up: real swears below, for science.)</span>
           </p>
         </Reveal>
@@ -88,7 +88,7 @@ export function Playground() {
   
             <div className="verdict-cols">
               <div className="verdict-us">
-                <span className="verdict-label">streamsafe</span>
+                <span className="verdict-label">earmuffs</span>
                 <motion.div
                   className={`stamp ${ex.verdict}`}
                   initial={{ opacity: 0, scale: 1.5, rotate: -18 }}

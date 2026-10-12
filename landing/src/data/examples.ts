@@ -3,7 +3,7 @@ export type Verdict = "beep" | "clean";
 export type Example = {
   text: string;
   word: string; // substring of text that gets judged
-  verdict: Verdict; // what streamsafe does
+  verdict: Verdict; // what earmuffs does
   heard: string; // what the kid hears; [beep] marks the bleep
   reason: string;
   list: Verdict; // what a plain word list does

@@ -128,13 +128,13 @@ const STEPS = [
   {
     n: "01",
     title: "it listens ahead",
-    body: "streamsafe hears the stream a few seconds before your kid does, which is enough time to catch a swear before it plays.",
+    body: "earmuffs hears the stream a few seconds before your kid does, which is enough time to catch a swear before it plays.",
     tech: "grabs audio chunks early · speech-to-text",
   },
   {
     n: "02",
     title: "it understands context",
-    body: "a word list blocks “assassin” and misses “fvck”. streamsafe reads the whole sentence and judges every risky word.",
+    body: "a word list blocks “assassin” and misses “fvck”. earmuffs reads the whole sentence and judges every risky word.",
     tech: "context-aware ai classifier",
   },
   {

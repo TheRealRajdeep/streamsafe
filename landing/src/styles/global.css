@@ -357,11 +357,11 @@ section {
 .st-stamp b {
   font-size: 22px;
 }
-.st-shield {
+.st-headphones {
   right: -30px;
   bottom: -34px;
 }
-.st-shield .sticker-float {
+.st-headphones .sticker-float {
   display: grid;
   place-items: center;
   width: 84px;
@@ -406,7 +406,7 @@ section {
   .st-stamp {
     right: -10px;
   }
-  .st-shield {
+  .st-headphones {
     right: 120px;
     bottom: -44px;
   }
@@ -414,7 +414,7 @@ section {
 @media (max-width: 760px) {
   .st-note,
   .drag-hint,
-  .st-shield {
+  .st-headphones {
     display: none;
   }
   .st-face {

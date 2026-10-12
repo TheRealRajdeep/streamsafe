@@ -1,4 +1,4 @@
-# StreamSafe — Implementation Checklist
+# Earmuffs — Implementation Checklist
 
 Handoff document. A fresh agent should be able to pick up the work from this file plus the code in `chrome-extension/`. Full design rationale: `plan.md`. Work top to bottom. Tick a build item when it's implemented; tick a step's **Acceptance** box only after that check actually passes. Record results where the checklist asks.
 
@@ -39,7 +39,7 @@ Handoff document. A fresh agent should be able to pick up the work from this fil
 - API keys are entered in the popup and stored in `chrome.storage.local`. **Never hard-code or commit keys.**
 - All network calls to Deepgram / TypeSafe / Anthropic happen in the **service worker** (`background.js`), never in the page (Twitch CSP blocks them, and keys must stay out of the page).
 - Page-world code cannot use `chrome.*`. It talks to `bridge.js` (isolated world) via `window.postMessage`; the bridge relays to the service worker via `chrome.runtime.sendMessage`.
-- Every page-world log line starts with `[streamsafe]`.
+- Every page-world log line starts with `[earmuffs]`.
 - Run `node --check <file>` on every JS file you touch.
 
 ### Gotchas learned in the spike
@@ -110,7 +110,7 @@ Bridge forwards to `chrome.runtime.sendMessage({ type, payload })`; background r
 > - AudioContext also auto-starts once the page has had any user interaction (`navigator.userActivation.hasBeenActive`).
 > - `hook.js` only forwards segments (no `onPlaylist`); prefetch stripping happens inside the worker.
 > - Haiku call uses `max_tokens: 400` and no `temperature`.
-> - Overlap/ownership logic lives in `audio.js` `buildWindow()`; per-chunk logs come from `main.js` as `[streamsafe] chunk {stt, classifier, slack, words, beep, changes}`.
+> - Overlap/ownership logic lives in `audio.js` `buildWindow()`; per-chunk logs come from `main.js` as `[earmuffs] chunk {stt, classifier, slack, words, beep, changes}`.
 > - Page-side timeouts (classify 3.5 s, chat 3.5 s) are longer than the background's (2.9 s) so real errors reach the page; background logs every `transcribe`/`classify` with timing in the service-worker console.
 > - Keys can also be loaded from `chrome-extension/.env` (gitignored) on install/startup, filling only empty popup fields.
 
@@ -176,7 +176,7 @@ Decision: Jev (audio classifier timeout raised 2.5 s → 3 s because of the 2.4 
 
 ### Step 2 — Scaffold `chrome-extension/`
 - [x] `manifest.json`:
-  - `manifest_version: 3`, name "StreamSafe", `permissions: ["storage"]`, `host_permissions: ["https://api.deepgram.com/*", "https://api.typesafe.ai/*", "https://api.anthropic.com/*"]`.
+  - `manifest_version: 3`, name "Earmuffs", `permissions: ["storage"]`, `host_permissions: ["https://api.deepgram.com/*", "https://api.typesafe.ai/*", "https://api.anthropic.com/*"]`.
   - `background: { service_worker: "background.js" }`, `action: { default_popup: "popup.html" }`.
   - content script 1: `matches: ["https://www.twitch.tv/*"]`, `world: "MAIN"`, `run_at: "document_start"`, `js: ["util.js", "hook.js", "wordlist.js", "audio.js", "sync.js", "chat.js", "badge.js", "main.js"]` (same world, run in order, share globals via a `window.__ss` namespace object).
   - content script 2: same matches, isolated world, `run_at: "document_start"`, `js: ["bridge.js"]`.
@@ -184,7 +184,7 @@ Decision: Jev (audio classifier timeout raised 2.5 s → 3 s because of the 2.4 
 - [x] `util.js`: `concatBytes`, `concatFloat`, `log`.
 - [x] `bridge.js`, `background.js`, `popup.html`, `popup.js` skeletons with the protocol above. Popup: enable toggle, three key inputs (password type), classifier select (Jev/Haiku), stats display, last error, "Reset stats".
 
-- [x] **Acceptance:** loads unpacked without errors; on a live Twitch page, the StreamSafe badge appears over the player; with a Deepgram key saved, console shows `[streamsafe] chunk {…}` logs (~1 every 2s); popup saves and reloads keys.
+- [x] **Acceptance:** loads unpacked without errors; on a live Twitch page, the Earmuffs badge appears over the player; with a Deepgram key saved, console shows `[earmuffs] chunk {…}` logs (~1 every 2s); popup saves and reloads keys.
 
 ### Step 3 — Word list (`wordlist.js`)
 - [x] `normalize(token)`: lowercase; strip punctuation at edges; map leetspeak `0→o 1→i 3→e 4→a 5→s 7→t @→a $→s !→i`; map common Unicode homoglyphs (Cyrillic а/е/о/р/с/х, `ƒ→f`, accented vowels → base); collapse 3+ repeated letters to 2 (`fuuuuck→fuuck`), then also test with 1.
@@ -231,7 +231,7 @@ Decision: Jev (audio classifier timeout raised 2.5 s → 3 s because of the 2.4 
 - [x] **Acceptance:** in a busy chat, messages blur briefly (<1.5s) then appear; swears (incl. `fvck`, `sh1t`) are masked; "class", "assassin" and "what the hell" are untouched. No chat lag build-up over 5 min.
 
 ### Step 7 — Badge & popup polish
-- [x] `badge.js`: small overlay in the player's top-left (position relative to `findPlayerVideo()` rect, update on resize). States: `🛡 StreamSafe — click the page to enable` → `calibrating…` → `🛡 StreamSafe on`. On each beep, flash for 1.5s: `🔇 "…what the f*** was…"`. Warnings: `⚠ speech-to-text failing`, `⚠ classifier slow — using word list`.
+- [x] `badge.js`: small overlay in the player's top-left (position relative to `findPlayerVideo()` rect, update on resize). States: `🎧 Earmuffs — click the page to enable` → `calibrating…` → `🎧 Earmuffs on`. On each beep, flash for 1.5s: `🔇 "…what the f*** was…"`. Warnings: `⚠ speech-to-text failing`, `⚠ classifier slow — using word list`.
 - [x] Popup shows live stats (beeped words, chat words masked, chunks processed, STT failures, classifier late) and `lastError`; enable toggle actually disables all filtering (hook stays, nothing scheduled, chat untouched).
 
 - [x] **Acceptance:** badge visible and readable over the video; counters move while watching; toggling off stops beeps within one chunk.
@@ -253,6 +253,6 @@ Decision: Jev (audio classifier timeout raised 2.5 s → 3 s because of the 2.4 
 ## 5. Demo-day checklist
 - [ ] Clean Chrome profile, 7TV off, extension loaded unpacked, keys entered, classifier set per Step 1.
 - [ ] 2–3 sweary streamers likely live during the demo slot, tabs pre-opened.
-- [ ] Click the page once → badge shows `🛡 StreamSafe on` before presenting.
+- [ ] Click the page once → badge shows `🎧 Earmuffs on` before presenting.
 - [ ] Popup stats reset before the demo; DevTools console open on a second screen showing per-chunk `stt / jev / slack` logs.
 - [ ] Pitch slide: word list vs Jev accuracy from Step 1.
